@@ -1,0 +1,35 @@
+Frontend 前端 (展示層)
+Vue.js
+
+Backend 後端 (業務邏輯層)
+Java + Spring Boot + Gradle
+
+DB 資料庫 (資料層)
+H2 (Spring Boot內建)
+
+需求
+透過 Stored Procedure 存取資料庫
+異動多個資料表時，實作 Transaction
+防止 SQL Injection 和 XSS
+
+
+
+後端使用的版本
+Java JDK 21 LTS
+Spring Boot  3.2.12
+Gradle 8.14.3
+
+使用 Spring Initializr 建立
+Project: Gradle-Groovy
+Language: Java
+Spring Boot: 3.4.7 (後修改成3.2.12)
+Packaging: Jar
+Java: 21
+Dependencies:
+-Spring Web
+-Spring Data JPA 
+-H2 Database
+-Validation 
+-Spring Boot DevTools 
+-Lombok 
+-Spring Security 
