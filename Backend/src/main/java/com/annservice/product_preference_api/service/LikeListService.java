@@ -3,6 +3,7 @@ package com.annservice.product_preference_api.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.annservice.product_preference_api.dto.LikeListRequestDTO;
@@ -56,5 +57,16 @@ public class LikeListService {
 
             likeListRepository.save(newLikeItem);
         }
+    }
+
+    @Transactional
+    public void deleteByUserIdAndProductNo(String userId, Long productNo) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("找不到使用者"));
+
+        Product product = productListRepository.findById(productNo)
+                .orElseThrow(() -> new RuntimeException("找不到產品"));
+
+        likeListRepository.deleteByUserAndProduct(user, product);
     }
 }
