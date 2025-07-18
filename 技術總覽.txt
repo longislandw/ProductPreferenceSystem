@@ -33,3 +33,8 @@ Dependencies:
 -Spring Boot DevTools 
 -Lombok 
 -Spring Security 
+
+關於機密資訊等設定
+為避免推送機密資訊進git, 此類資訊編寫在 application-dev.properties
+請根據範例填入相關資料
+./gradlew bootRun --args='--spring.profiles.active=dev'
