@@ -1,6 +1,5 @@
 package com.annservice.product_preference_api.entity;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,7 +28,7 @@ public class LikeList {
     private Integer orderName; // 購買數量
 
     @Column(name = "account")
-    private String account;
+    private String account; // 使用者的帳號
 
     @Column(name = "total_fee")
     private Double totalFee;
@@ -38,10 +37,10 @@ public class LikeList {
     private Double totalAmount;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)  // foreign key 對應 User 類別的 userId
+    @JoinColumn(name = "user_id", nullable = false) // foreign key 對應 User 類別的 userId
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "product_no", nullable = false)  // foreign key 對應 Product 類別的 productNo
+    @JoinColumn(name = "product_no", nullable = false) // foreign key 對應 Product 類別的 productNo
     private Product product;
 }
