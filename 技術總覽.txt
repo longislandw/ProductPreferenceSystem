@@ -1,11 +1,18 @@
-Frontend 前端 (展示層)
+Frontend 前端 ( Web Server)
 Vue.js
 
-Backend 後端 (業務邏輯層)
+Backend 後端 ( Application Server)
 Java + Spring Boot + Gradle
 
-DB 資料庫 (資料層)
+DB 資料庫 (任一關聯式資料庫)
 H2 (Spring Boot內建)
+
+後端展示層、業務層、資料層以及共用層
+展示層: com.annservice.product_preference_api.controller
+業務層: com.annservice.product_preference_api.service
+資料層: com.annservice.product_preference_api.repository
+資料交流模型 Data Transfer Object: com.annservice.product_preference_api.dto;
+
 
 需求
 透過 Stored Procedure 存取資料庫
