@@ -11,12 +11,16 @@ import com.annservice.product_preference_api.dto.LikeListResponseDTO;
 import com.annservice.product_preference_api.entity.Product;
 
 @Repository
-public interface LikeListRepository extends JpaRepository<Product, Long>{
+public interface LikeListRepository extends JpaRepository<Product, Long> {
     @Query("SELECT new com.annservice.product_preference_api.dto.LikeListResponseDTO" +
-       "(p.productName, l.orderName, p.price, l.totalAmount, l.totalFee) " +
-       "FROM LikeList l " +
-       "JOIN l.user u " +
-       "JOIN l.product p " +
-       "WHERE u.userId = :userId")
+            "(p.productName, l.orderName, p.price, l.totalAmount, l.totalFee) " +
+            "FROM LikeList l " +
+            "JOIN l.user u " +
+            "JOIN l.product p " +
+            "WHERE u.userId = :userId")
     List<LikeListResponseDTO> findLikeListByUserId(@Param("userId") String userId);
+    // 利用 jpa的 prepare statement 進行查詢可避免 sql injection的風險
+    // @Param("userId") String userId -> 將 userID 作為查詢字串 input
+    // new com.annservice.product_preference_api.dto.LikeListResponseDTO ->
+    // 每一列查詢結果產生為一個新的DTO物件, 然後加入LIST回傳
 }
