@@ -1,8 +1,8 @@
 package com.annservice.product_preference_api.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.AllArgsConstructor;
 
 @Getter
 @Setter
@@ -13,5 +13,5 @@ public class LikeListResponseDTO {
     private Double unitPrice;
     private Double totalPrice;
     private Double totalFee;
-    
+
 }
