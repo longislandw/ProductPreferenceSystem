@@ -37,8 +37,8 @@ public class LikeListService {
         if (existing.isPresent()) {
             LikeList likeItem = existing.get();
             likeItem.setOrderName(likeItem.getOrderName() + dto.getOrderName());
-            likeItem.setTotalFee(likeItem.getTotalAmount() * likeItem.getProduct().getFeeRate());
             likeItem.setTotalAmount(likeItem.getProduct().getPrice() * likeItem.getOrderName());
+            likeItem.setTotalFee(likeItem.getTotalAmount() * likeItem.getProduct().getFeeRate());
             likeListRepository.save(likeItem);
         } else {
             // 取得 Product 和 User 實體
@@ -51,10 +51,10 @@ public class LikeListService {
             LikeList newLikeItem = new LikeList();
             newLikeItem.setOrderName(dto.getOrderName());
             newLikeItem.setAccount(user.getAccount());
-            newLikeItem.setTotalFee(newLikeItem.getTotalAmount() * product.getFeeRate());
-            newLikeItem.setTotalAmount(product.getPrice() * dto.getOrderName());
             newLikeItem.setUser(user);
             newLikeItem.setProduct(product);
+            newLikeItem.setTotalAmount(product.getPrice() * dto.getOrderName());
+            newLikeItem.setTotalFee(newLikeItem.getTotalAmount() * product.getFeeRate());
 
             likeListRepository.save(newLikeItem);
         }
