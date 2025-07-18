@@ -1,4 +1,4 @@
-package com.annservice.product_preference_api.model;
+package com.annservice.product_preference_api.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
