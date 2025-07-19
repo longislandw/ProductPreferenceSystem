@@ -3,9 +3,18 @@
   <div>
     <h2>喜好金融商品清單</h2>
     <table>
-      <tr>
-        <th>產品名稱</th><th>帳號</th><th>數量</th><th>總金額</th><th>總手續費</th><th>電子信箱</th><th>操作</th>
-      </tr>
+      <thead>
+        <tr>
+          <th>產品名稱</th>
+          <th>帳號</th>
+          <th>數量</th>
+          <th>總金額</th>
+          <th>總手續費</th>
+          <th>電子信箱</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+     
       <tr v-for="item in likeList" :key="item.productName">
         <td>{{ item.productName }}</td>
         <td>{{ item.account }}</td>

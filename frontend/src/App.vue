@@ -1,12 +1,13 @@
 <template>
   <div id="app">
+    <header style="text-align: right; padding: 10px;">
+      <span v-if="user.id">您好，{{ user.name }} ({{ user.id }})</span>
+    </header>
     <nav>
       <router-link to="/">金融商品清單</router-link> |
       <router-link to="/user">個人資料</router-link>
     </nav>
-    <header style="text-align: right; padding: 10px;">
-      <span v-if="user.id">您好，{{ user.name }} ({{ user.id }})</span>
-    </header>
+    
     <h1>金融商品系統</h1>
     <router-view></router-view>
   </div>

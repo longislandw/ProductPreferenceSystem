@@ -3,7 +3,8 @@ CREATE TABLE user_table (
     user_id VARCHAR(50) NOT NULL PRIMARY KEY,
     user_name VARCHAR(100),
     email VARCHAR(100),
-    account VARCHAR(100) NOT NULL UNIQUE
+    account VARCHAR(100) NOT NULL UNIQUE,
+    ppassword VARCHAR(100) NOT NULL  -- 儲存 hash + salt 後的密碼
 );
 
 -- product
