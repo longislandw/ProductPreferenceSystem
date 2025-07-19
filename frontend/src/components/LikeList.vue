@@ -13,14 +13,31 @@
       </thead>
       <tbody>
         <tr v-for="item in likeList" :key="item.productNo">
-          <td>{{ item.productName }}</td>
-          <td>{{ item.orderQuantity }}</td>
-          <td>{{ item.totalPrice }}</td>
-          <td>{{ item.totalFee }}</td>
-          <td>
-            <button @click="deleteItem(item)">刪除</button>
-            <router-link :to="`/edit-like/${userId}/${item.productNo}`">修改</router-link>
-          </td>
+          <template v-if="editingItem === item.productNo">
+            <!-- 編輯模式 -->
+            <td>{{ item.productName }}</td>
+            <td>
+              <input type="number" v-model.number="editForm.orderQuantity" min="1" />
+            </td>
+            <td>{{ (editForm.orderQuantity * item.price * (1+item.feeRate)).toFixed(2) }}</td>
+            <td>{{ (editForm.orderQuantity * item.price * item.feeRate).toFixed(2) }}</td>
+            <td>{{ item.email }}</td>
+            <td>
+              <button @click="updateItem(item)">儲存</button>
+              <button @click="cancelEdit">取消</button>
+            </td>
+          </template>
+          <template v-else>
+            <!-- 顯示模式 -->
+            <td>{{ item.productName }}</td>
+            <td>{{ item.orderQuantity }}</td>
+            <td>{{ item.totalPrice }}</td>
+            <td>{{ item.totalFee }}</td>
+            <td>
+              <button @click="deleteItem(item)">刪除</button>
+              <button @click="startEdit(item)">修改</button>
+            </td>
+          </template>
         </tr>
       </tbody>
     </table>
@@ -37,6 +54,10 @@ export default {
     const route = useRoute()
     const userId = ref(route.params.userid)
     const likeList = ref([])
+    const editingItem = ref(null)
+    const editForm = ref({
+      totalAmount: 1
+    })
 
     const loadList = async () => {
       try {
@@ -52,7 +73,28 @@ export default {
       loadList()
     }
 
-    // 初始化
+    const startEdit = (item) => {
+      editingItem.value = item.productNo
+      editForm.value = {
+        totalAmount: item.totalAmount
+      }
+    }
+
+    const cancelEdit = () => {
+      editingItem.value = null
+    }
+
+    const updateItem = async (item) => {
+      const dto = {
+        userId: userId.value,
+        productNo: item.productNo,
+        orderName: editForm.value.orderQuantity
+      }
+      await axios.put('http://localhost:8081/api/like-list', dto)
+      editingItem.value = null
+      loadList()
+    }
+
     onMounted(loadList)
 
     // 如果路由參數變了（使用者換了），重新載入
@@ -64,7 +106,12 @@ export default {
     return {
       likeList,
       userId,
-      deleteItem
+      editingItem,
+      editForm,
+      deleteItem,
+      startEdit,
+      cancelEdit,
+      updateItem
     }
   }
 }
