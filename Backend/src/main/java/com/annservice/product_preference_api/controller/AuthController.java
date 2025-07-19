@@ -40,7 +40,7 @@ public class AuthController {
             response.setUserId(user.getUserId());
             response.setName(user.getUserName());
 
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(401).body("帳號或密碼錯誤");
         }

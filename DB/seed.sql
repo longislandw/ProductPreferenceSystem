@@ -1,7 +1,7 @@
 -- User 資料
 INSERT INTO user_table (user_id, user_name, email, account, ppassword)
-VALUES ('A1236456789', '王O明', 'test@email.com', '1111999666', '$2a$12$fFe6M1AF8w6X3UgCUAoGseTAwvHnqOCddFigKnyCU8VoAGRUtCuYS'),
-       ('A0000000001', 'Ariel', 'ariel@email.com', '2222999667', '$2a$12$au.vbRaudFGCHrJzx5lDsu2wUR5Nazz3bx1J3XO4DlN7K.HsJBw/.');
+VALUES ('A1236456789', '王O明', 'test@email.com', '1111999666', '$2a$10$P/I2HrXQobQdeyowWfG6Leslq.IvVBruVClh/MyjrEZpaMXBvdBy2'),
+       ('A0000000001', 'Ariel', 'ariel@email.com', '2222999667', '$2a$10$QGSWI8lbtzduxN8fbYt/8.VE3ja0anxRIdPdhTDPqroDU4xzhm5HK');
 
 -- Product 資料
 INSERT INTO product (product_no, product_name, price, fee_rate)
