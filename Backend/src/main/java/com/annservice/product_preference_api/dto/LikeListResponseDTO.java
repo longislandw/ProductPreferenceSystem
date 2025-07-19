@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 @Setter
 @AllArgsConstructor
 public class LikeListResponseDTO {
+    private Long productNo;
     private String productName;
     private Integer orderQuantity;
     private Double unitPrice;

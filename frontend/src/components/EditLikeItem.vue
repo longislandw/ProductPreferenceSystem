@@ -1,43 +1,60 @@
-<!-- frontend/src/components/EditLikeItem.vue -->
+<!-- frontend/src/components/EditLike.vue -->
 <template>
-  <div v-if="item">
+  <div>
     <h2>修改喜好商品</h2>
-    <form @submit.prevent="submitEdit">
-      <p>產品名稱：{{ item.productName }}</p>
-      <p>原數量：{{ item.totalAmount }}</p>
-      <label>新數量：
-        <input type="number" v-model.number="item.totalAmount" />
-      </label>
-      <br />
-      <button type="submit">修改</button>
-    </form>
+    <div v-if="likeItem">
+      <p><strong>產品名稱：</strong>{{ likeItem.productName }}</p>
+      <p>
+        <label>
+          數量：
+          <input type="number" v-model.number="likeItem.totalAmount" min="1" />
+        </label>
+      </p>
+      <button @click="updateItem">儲存修改</button>
+    </div>
+    <p v-else>載入中...</p>
   </div>
 </template>
 
 <script>
+import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 
 export default {
-  props: ['userId', 'productNo'],
-  data() {
-    return {
-      item: null
+  setup() {
+    const route = useRoute()
+    const router = useRouter()
+    const userid = route.params.userid
+    const productNo = route.params.productNo
+    const likeItem = ref(null)
+
+    const loadLikeItem = async () => {
+      const res = await axios.get(`http://localhost:8081/api/like-list/${userid}`)
+      likeItem.value = res.data.find(item => item.productNo === productNo)
     }
-  },
-  async mounted() {
-    const res = await axios.get(`http://localhost:8081/api/like-list/user01`)
-    this.item = res.data.find(x => x.productNo == this.productNo)
-  },
-  methods: {
-    async submitEdit() {
+
+    const updateItem = async () => {
       const dto = {
-        userId: 'user01',
-        productNo: this.productNo,
-        orderName: this.item.totalAmount
+        userId: userid,
+        productNo: parseInt(productNo), // 因為 productNo 是 Long
+        totalAmount: likeItem.value.totalAmount
       }
-      await axios.put('http://localhost:8081/api/like-list', dto)
-      alert('修改成功')
-      this.$router.push('/like-list')
+      try {
+        await axios.put('http://localhost:8081/api/like-list', dto)
+        alert('更新成功')
+        router.push(`/${userid}/like-list`)
+      } catch (err) {
+        console.error('更新失敗', err)
+        alert('更新失敗')
+      }
+    }
+
+    onMounted(loadLikeItem)
+
+    return {
+      likeItem,
+      updateItem
     }
   }
 }

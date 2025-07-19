@@ -1,13 +1,11 @@
 package com.annservice.product_preference_api.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.annservice.product_preference_api.dto.LikeListResponseDTO;
 import com.annservice.product_preference_api.dto.UserInfoDTO;
 import com.annservice.product_preference_api.entity.User;
 import com.annservice.product_preference_api.repository.UserRepository;

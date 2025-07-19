@@ -16,7 +16,7 @@ import com.annservice.product_preference_api.entity.User;
 @Repository
 public interface LikeListRepository extends JpaRepository<LikeList, Long> {
     @Query("SELECT new com.annservice.product_preference_api.dto.LikeListResponseDTO" +
-            "(p.productName, l.orderName, p.price, l.totalAmount, l.totalFee) " +
+            "(p.productNo, p.productName, l.orderName, p.price, l.totalAmount, l.totalFee) " +
             "FROM LikeList l " +
             "JOIN l.user u " +
             "JOIN l.product p " +

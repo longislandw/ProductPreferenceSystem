@@ -5,21 +5,18 @@
       <thead>
         <tr>
           <th>產品名稱</th>
-          <th>帳號</th>
           <th>數量</th>
           <th>總金額</th>
           <th>總手續費</th>
-          <th>電子信箱</th>
           <th>操作</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in likeList" :key="item.productNo">
           <td>{{ item.productName }}</td>
-          <td>{{ item.account }}</td>
-          <td>{{ item.totalAmount }}</td>
+          <td>{{ item.orderQuantity }}</td>
+          <td>{{ item.totalPrice }}</td>
           <td>{{ item.totalFee }}</td>
-          <td>{{ item.email }}</td>
           <td>
             <button @click="deleteItem(item)">刪除</button>
             <router-link :to="`/edit-like/${userId}/${item.productNo}`">修改</router-link>
@@ -72,3 +69,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+</style>
