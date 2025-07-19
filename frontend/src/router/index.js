@@ -5,8 +5,8 @@ import EditLikeItem from '../components/EditLikeItem.vue'
 import UserProfile from '../components/UserProfile.vue'
 
 const routes = [
-    { path: '/', name: 'ProductList', component: ProductList, props: true },
-    { path: '/like-list', name: 'LikeList', component: LikeList, props: true },
+    { path: '/:userid', name: 'ProductList', component: ProductList, props: true },
+    { path: '/like-list/:userid', name: 'LikeList', component: LikeList, props: true },
     { path: '/edit-like/:userId/:productNo', name: 'EditLikeItem', component: EditLikeItem, props: true },
     { path: '/user', name: "UserProfile", component: UserProfile, props: true }
 ]

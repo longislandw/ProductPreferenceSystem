@@ -1,4 +1,3 @@
-<!-- frontend/src/components/LikeList.vue -->
 <template>
   <div>
     <h2>喜好金融商品清單</h2>
@@ -14,42 +13,62 @@
           <th>操作</th>
         </tr>
       </thead>
-     
-      <tr v-for="item in likeList" :key="item.productName">
-        <td>{{ item.productName }}</td>
-        <td>{{ item.account }}</td>
-        <td>{{ item.totalAmount }}</td>
-        <td>{{ item.totalFee }}</td>
-        <td>{{ item.email }}</td>
-        <td>
-          <button @click="deleteItem(item)">刪除</button>
-          <router-link :to="`/edit-like/user01/${item.productNo}`">修改</router-link>
-        </td>
-      </tr>
+      <tbody>
+        <tr v-for="item in likeList" :key="item.productNo">
+          <td>{{ item.productName }}</td>
+          <td>{{ item.account }}</td>
+          <td>{{ item.totalAmount }}</td>
+          <td>{{ item.totalFee }}</td>
+          <td>{{ item.email }}</td>
+          <td>
+            <button @click="deleteItem(item)">刪除</button>
+            <router-link :to="`/edit-like/${userId}/${item.productNo}`">修改</router-link>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import { onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+
 export default {
-  data() {
+  setup() {
+    const route = useRoute()
+    const userId = ref(route.params.userid)
+    const likeList = ref([])
+
+    const loadList = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8081/api/like-list/${userId.value}`)
+        likeList.value = res.data
+      } catch (err) {
+        console.error('取得清單失敗', err)
+      }
+    }
+
+    const deleteItem = async (item) => {
+      await axios.delete(`http://localhost:8081/api/like-list?userId=${userId.value}&productNo=${item.productNo}`)
+      loadList()
+    }
+
+    // 初始化
+    onMounted(loadList)
+
+    // 如果路由參數變了（使用者換了），重新載入
+    watch(() => route.params.userid, (newId) => {
+      userId.value = newId
+      loadList()
+    })
+
     return {
-      likeList: []
+      likeList,
+      userId,
+      deleteItem
     }
-  },
-  methods: {
-    async deleteItem(item) {
-      await axios.delete(`http://localhost:8081/api/like-list?userId=user01&productNo=${item.productNo}`)
-      this.loadList()
-    },
-    async loadList() {
-      const res = await axios.get('http://localhost:8081/api/like-list/user01')
-      this.likeList = res.data
-    }
-  },
-  mounted() {
-    this.loadList()
   }
 }
 </script>

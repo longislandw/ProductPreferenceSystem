@@ -8,6 +8,7 @@
           <th>產品名稱</th>
           <th>價格</th>
           <th>手續費率</th>
+          <th>帳號</th>
           <th>數量</th>
           <th>操作</th>
         </tr>
@@ -17,6 +18,7 @@
           <td>{{ p.productName }}</td>
           <td>{{ p.price }}</td>
           <td>{{ (p.feeRate * 100).toFixed(1) }}%</td>
+          <td></td>
           <td><input type="number" v-model.number="p.amount" min="1" /></td>
           <td><button @click="addToLikeList(p)">加入喜好</button></td>
         </tr>
