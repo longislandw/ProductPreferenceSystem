@@ -7,6 +7,14 @@ CREATE TABLE user_table (
     ppassword VARCHAR(100) NOT NULL  -- 儲存 hash + salt 後的密碼
 );
 
+-- authority_table
+CREATE TABLE user_authority (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    authority VARCHAR(100) NOT NULL,
+    user_id VARCHAR(50) NOT NULL,
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES user_table(user_id) ON DELETE CASCADE
+);
+
 -- product
 CREATE TABLE product (
     product_no BIGINT AUTO_INCREMENT PRIMARY KEY,
