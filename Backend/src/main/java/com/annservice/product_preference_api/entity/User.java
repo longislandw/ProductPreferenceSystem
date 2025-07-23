@@ -3,10 +3,11 @@ package com.annservice.product_preference_api.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.CascadeType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class User {
     @Column(name = "ppassword", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "authority", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authority_mapping", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "authority"))
     private List<UserAuthority> authorities = new ArrayList<>();
 }

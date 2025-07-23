@@ -63,7 +63,9 @@ public class SecurityConfig {
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                                                 .requestMatchers(HttpMethod.GET, "/h2-console/**").hasAuthority("ADMIN")
-                                                .requestMatchers(HttpMethod.GET, "/api/user/**").hasAuthority("ADMIN")
+                                                .requestMatchers(HttpMethod.POST, "/api/user/regist").permitAll()
+                                                .requestMatchers(HttpMethod.GET, "/api/user/all").hasAuthority("ADMIN")
+                                                .requestMatchers(HttpMethod.GET, "/api/user/**").hasAuthority("USER")
                                                 .requestMatchers(HttpMethod.GET, "/api/like-list/**")
                                                 .hasAnyAuthority("USER", "ADMIN")
                                                 .requestMatchers(HttpMethod.GET, "/api/auth/**").hasAuthority("ADMIN")

@@ -1,6 +1,8 @@
 package com.annservice.product_preference_api.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -8,8 +10,10 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.annservice.product_preference_api.dto.UserInfoDTO;
+import com.annservice.product_preference_api.dto.UserRegisterInfoDTO;
 import com.annservice.product_preference_api.entity.User;
 import com.annservice.product_preference_api.entity.UserAuthority;
+import com.annservice.product_preference_api.repository.UserAuthorityRepository;
 import com.annservice.product_preference_api.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserAuthorityRepository userAuthRepo;
 
     // // 注入 Spring Security 提供的密碼加密器
     // private BCryptPasswordEncoder passwordEncoder;
@@ -43,7 +48,10 @@ public class UserService {
             return new UserInfoDTO(user.getUserId(), user.getUserName(), user.getEmail(), user.getAccount(),
                     user.getAuthorities());
         } else {
-            return new UserInfoDTO("0000", "訪客", "visitor@email.com", "00000000", Arrays.asList(new UserAuthority()));
+            // 從資料庫查詢「visitor」使用者
+            User visitor = userRepository.findById("0000").orElseThrow(() -> new RuntimeException("找不到權限 VISITOR"));
+            return new UserInfoDTO(visitor.getUserId(), visitor.getUserName(), visitor.getEmail(), visitor.getAccount(),
+                    visitor.getAuthorities());
         }
     }
 
@@ -58,6 +66,25 @@ public class UserService {
                         user.getAccount(),
                         user.getAuthorities()))
                 .collect(Collectors.toList());
+    }
+
+    // 註冊使用者
+    public String registerUser(UserRegisterInfoDTO dto) {
+        User newUser = new User();
+        newUser.setUserId(dto.getUserId());
+        newUser.setPassword(dto.getPassword());
+        newUser.setUserName(dto.getUserName());
+        newUser.setEmail(dto.getEmail());
+        newUser.setAccount(dto.getAccount());
+
+        // 從資料庫查詢「user」權限
+        UserAuthority userRole = userAuthRepo.findById("USER")
+                .orElseThrow(() -> new RuntimeException("找不到權限 USER"));
+        // 設定權限(list)
+        newUser.setAuthorities(new ArrayList<UserAuthority>(List.of(userRole)));
+
+        userRepository.save(newUser);
+        return dto.getUserId();
     }
 
 }

@@ -8,11 +8,19 @@ CREATE TABLE user_table (
 );
 
 -- authority_table
+-- 權限表：定義所有合法權限
 CREATE TABLE user_authority (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    authority VARCHAR(100) NOT NULL,
-    user_id VARCHAR(50) NOT NULL,
-    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES user_table(user_id) ON DELETE CASCADE
+    authority VARCHAR(50) PRIMARY KEY,
+    description VARCHAR(100)
+);
+
+-- 
+CREATE TABLE user_authority_mapping (
+    user_id VARCHAR(50),
+    authority VARCHAR(50),
+    PRIMARY KEY (user_id, authority),
+    FOREIGN KEY (user_id) REFERENCES user_table(user_id),
+    FOREIGN KEY (authority) REFERENCES user_authority(authority)
 );
 
 -- product
