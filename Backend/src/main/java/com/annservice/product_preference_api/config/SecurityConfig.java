@@ -5,6 +5,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.SecurityFilterChain;
@@ -52,6 +53,11 @@ public class SecurityConfig {
         public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
                 return http
                                 .formLogin(Customizer.withDefaults())
+                                // 停用/h2-console/**的 CSRF 保護，以避免出現HTTP 403 錯誤。
+                                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
+                                // 允許同源的app使用 iframe框架
+                                .headers(headers -> headers
+                                                .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                                 // .csrf(csrf -> csrf.disable()) // 關閉 CSRF
                                 // .formLogin(form -> form.disable()) // <== 禁用預設表單登入
                                 .authorizeHttpRequests(auth -> auth
@@ -64,7 +70,6 @@ public class SecurityConfig {
                                                 .anyRequest().authenticated()
                                 // .anyRequest().permitAll() // 所有請求皆允許
                                 )
-                                // .headers(headers -> headers.frameOptions().disable()) // 允許 h2-console iframe
                                 .build();
         }
 }
