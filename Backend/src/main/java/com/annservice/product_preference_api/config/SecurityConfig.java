@@ -12,7 +12,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
