@@ -2,21 +2,15 @@ package com.annservice.product_preference_api.security.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.List;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
@@ -29,36 +23,37 @@ public class SecurityConfig {
                 return PasswordEncoderFactories.createDelegatingPasswordEncoder();
         }
 
-        // 必須提供 authenticationManager，不然自動配置會失效
-        @Bean
-        public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-                return config.getAuthenticationManager();
-        }
+        // // 必須提供 authenticationManager，不然自動配置會失效
+        // @Bean
+        // public AuthenticationManager
+        // authenticationManager(AuthenticationConfiguration config) throws Exception {
+        // return config.getAuthenticationManager();
+        // }
 
-        @Bean
-        public InMemoryUserDetailsManager inMemoryUserDetailManager() {
-                UserDetails user1 = User
-                                .withUsername("user")
-                                .password("{noop}user")
-                                .authorities("USER")
-                                .build();
-                UserDetails user2 = User
-                                .withUsername("user2")
-                                .password("{noop}222")
-                                .authorities("USER")
-                                .build();
-                UserDetails user3 = User
-                                .withUsername("user3")
-                                .password("{noop}333")
-                                .authorities("USER")
-                                .build();
-                UserDetails admin = User
-                                .withUsername("admin")
-                                .password("{noop}pass")
-                                .authorities("ADMIN", "USER")
-                                .build();
-                return new InMemoryUserDetailsManager(List.of(user1, user2, user3, admin));
-        }
+        // @Bean
+        // public InMemoryUserDetailsManager inMemoryUserDetailManager() {
+        // UserDetails user1 = User
+        // .withUsername("user")
+        // .password("{noop}user")
+        // .authorities("USER")
+        // .build();
+        // UserDetails user2 = User
+        // .withUsername("user2")
+        // .password("{noop}222")
+        // .authorities("USER")
+        // .build();
+        // UserDetails user3 = User
+        // .withUsername("user3")
+        // .password("{noop}333")
+        // .authorities("USER")
+        // .build();
+        // UserDetails admin = User
+        // .withUsername("admin")
+        // .password("{noop}pass")
+        // .authorities("ADMIN", "USER")
+        // .build();
+        // return new InMemoryUserDetailsManager(List.of(user1, user2, user3, admin));
+        // }
 
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
