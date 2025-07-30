@@ -1,4 +1,4 @@
-package com.annservice.product_preference_api.controller;
+package com.annservice.product_preference_api.security.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,7 +12,7 @@ import com.annservice.product_preference_api.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 @CrossOrigin(origins = "*") // 若前後端分離，允許跨域請求
 @RequiredArgsConstructor
 public class AuthController {
