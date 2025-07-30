@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.annservice.product_preference_api.dto.UserInfoDTO;
@@ -25,7 +26,8 @@ public class UserService {
     private final UserAuthorityRepository userAuthRepo;
 
     // 注入 Spring Security 提供的密碼加密器
-    private BCryptPasswordEncoder passwordEncoder;
+    @Qualifier("securityPasswodEncoder")
+    private final PasswordEncoder passwordEncoder;
 
     // public User authenticate(String account, String rawPassword) {
     // Optional<User> user_chk = userRepository.findByAccount(account); // 這裡用帳號查詢

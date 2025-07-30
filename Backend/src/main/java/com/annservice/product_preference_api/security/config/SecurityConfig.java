@@ -1,17 +1,20 @@
-package com.annservice.product_preference_api.config;
+package com.annservice.product_preference_api.security.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.List;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
@@ -19,10 +22,18 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @EnableWebSecurity
 public class SecurityConfig {
 
-        // @Bean
-        // public BCryptPasswordEncoder passwordEncoder() {
-        // return new BCryptPasswordEncoder();
-        // }
+        // passwordEncoder實體化於 security.config.SecurityConfig.java
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                // DelegatingPasswordEncoder 透過密碼的前綴判斷該使用哪種加密方式, Ex:{noop}, {bcrypt}
+                return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        }
+
+        // 必須提供 authenticationManager，不然自動配置會失效
+        @Bean
+        public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+                return config.getAuthenticationManager();
+        }
 
         @Bean
         public InMemoryUserDetailsManager inMemoryUserDetailManager() {
@@ -62,6 +73,7 @@ public class SecurityConfig {
                                 // .formLogin(form -> form.disable()) // <== 禁用預設表單登入
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+                                                .requestMatchers(HttpMethod.GET, "/api/auth/genKey/*").permitAll()
                                                 .requestMatchers(HttpMethod.GET, "/h2-console/**").hasAuthority("ADMIN")
                                                 .requestMatchers(HttpMethod.POST, "/api/user/regist").permitAll()
                                                 .requestMatchers(HttpMethod.GET, "/api/user/all").hasAuthority("ADMIN")

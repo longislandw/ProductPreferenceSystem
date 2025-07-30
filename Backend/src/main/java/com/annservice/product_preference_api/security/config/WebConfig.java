@@ -1,3 +1,4 @@
+package com.annservice.product_preference_api.security.config;
 // package com.annservice.product_preference_api.config;
 
 // import org.springframework.context.annotation.Configuration;
