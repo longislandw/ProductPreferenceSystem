@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class UserService {
     private final UserAuthorityRepository userAuthRepo;
 
     // 注入 Spring Security 提供的密碼加密器
+    @Autowired
     @Qualifier("securityPasswodEncoder")
     private final PasswordEncoder passwordEncoder;
 

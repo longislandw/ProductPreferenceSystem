@@ -23,7 +23,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class SecurityConfig {
 
         // passwordEncoder實體化於 security.config.SecurityConfig.java
-        @Bean
+        @Bean("securityPasswodEncoder")
         public PasswordEncoder passwordEncoder() {
                 // DelegatingPasswordEncoder 透過密碼的前綴判斷該使用哪種加密方式, Ex:{noop}, {bcrypt}
                 return PasswordEncoderFactories.createDelegatingPasswordEncoder();
