@@ -3,8 +3,12 @@ package com.annservice.product_preference_api.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.annservice.product_preference_api.service.UserService;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -13,8 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthController {
 
-    // @Autowired
-    // private final UserService userService;
+    private final UserService userService;
 
     // @Autowired
     // private final JwtUtil jwtUtil;
@@ -22,6 +25,11 @@ public class AuthController {
     @GetMapping
     public ResponseEntity<String> auth() {
         return ResponseEntity.ok("你已成功取得授權");
+    }
+
+    @GetMapping("/genKey/{key}")
+    public ResponseEntity<String> generatePassword(@PathVariable String key) {
+        return ResponseEntity.ok(userService.genKey(key));
     }
 
     // @PostMapping("/login")

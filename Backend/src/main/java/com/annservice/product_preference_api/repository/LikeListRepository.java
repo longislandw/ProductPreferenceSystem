@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.annservice.product_preference_api.dto.LikeListResponseDTO;
 import com.annservice.product_preference_api.entity.LikeList;
 import com.annservice.product_preference_api.entity.Product;
-import com.annservice.product_preference_api.entity.User;
+import com.annservice.product_preference_api.entity.UserInfo;
 
 @Repository
 public interface LikeListRepository extends JpaRepository<LikeList, Long> {
@@ -30,5 +30,5 @@ public interface LikeListRepository extends JpaRepository<LikeList, Long> {
     Optional<LikeList> findByUser_UserIdAndProduct_ProductNo(String userId, Long productNo);
     // Spring Data JPA 自動根據欄位名稱產生查詢
 
-    void deleteByUserAndProduct(User user, Product product);
+    void deleteByUserAndProduct(UserInfo user, Product product);
 }

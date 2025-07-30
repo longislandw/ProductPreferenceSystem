@@ -23,7 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user_table")
-public class User {
+public class UserInfo {
 
     @Id
     @Column(name = "user_id", nullable = false, unique = true)

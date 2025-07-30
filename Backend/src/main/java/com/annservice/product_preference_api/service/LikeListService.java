@@ -10,7 +10,7 @@ import com.annservice.product_preference_api.dto.LikeListRequestDTO;
 import com.annservice.product_preference_api.dto.LikeListResponseDTO;
 import com.annservice.product_preference_api.entity.LikeList;
 import com.annservice.product_preference_api.entity.Product;
-import com.annservice.product_preference_api.entity.User;
+import com.annservice.product_preference_api.entity.UserInfo;
 import com.annservice.product_preference_api.exception.InvalidQueryException;
 import com.annservice.product_preference_api.repository.LikeListRepository;
 import com.annservice.product_preference_api.repository.ProductListRepository;
@@ -51,7 +51,7 @@ public class LikeListService {
 
         } else { // 沒有紀錄->新增
             // 取得 Product 和 User 實體
-            User user = userRepository.findById(dto.getUserId())
+            UserInfo user = userRepository.findById(dto.getUserId())
                     .orElseThrow(() -> new InvalidQueryException("使用者不存在"));
             Product product = productListRepository.findById(dto.getProductNo())
                     .orElseThrow(() -> new InvalidQueryException("商品不存在"));
@@ -72,7 +72,7 @@ public class LikeListService {
     // 刪除指定的喜愛項目
     @Transactional
     public void deleteByUserIdAndProductNo(String userId, Long productNo) {
-        User user = userRepository.findById(userId)
+        UserInfo user = userRepository.findById(userId)
                 .orElseThrow(() -> new InvalidQueryException("使用者不存在"));
 
         Product product = productListRepository.findById(productNo)

@@ -38,7 +38,7 @@ public class LikeList {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false) // foreign key 對應 User 類別的 userId
-    private User user;
+    private UserInfo user;
 
     @ManyToOne
     @JoinColumn(name = "product_no", nullable = false) // foreign key 對應 Product 類別的 productNo
