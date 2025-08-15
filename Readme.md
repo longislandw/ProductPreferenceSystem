@@ -1,8 +1,8 @@
 # 又一個 Spring Boot 網頁 (Yet Another Spring Boot Web)
 
 ## 專案簡介
+
 本系統為一個基礎的Spring Boot Web網頁實作，使用者可瀏覽商品列表，登入後將喜愛的商品加入個人喜好清單，並可修改、刪除喜好資料。系統為前後端分離架構，採用 Vue 3 作為前端框架，Spring Boot 作為後端服務，並使用 RESTful API 做資料交換，透過 JWT 及 Spring Security 管理身份驗證。
----
 
 ## 技術架構
 
